@@ -6,11 +6,11 @@ import Humidity from "@/components/Humidity.vue";
 import { ref, onMounted } from "vue";
 const WEBHOOK = import.meta.env.VITE_API_KEY;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
-const city = ref("Paris");
+const city = ref("Chisinau");
 const weatherInfo = ref(null);
 
 function getWeather() {
-  fetch(`${BASE_URL}?q=${city.value}&appid=${WEBHOOK}`)
+  fetch(`${BASE_URL}?q=${city.value}&appid=${WEBHOOK}&units=metric`)
     .then((response) => response.json())
     .then((data) => (weatherInfo.value = data));
 }
@@ -32,6 +32,9 @@ onMounted(getWeather);
                     v-model="city"
                     @keyup.enter="getWeather"
                   />
+                  <span class="search_ico" @click="getWeather">
+                    <img src="/src/assets/img/search.svg" alt="search" />
+                  </span>
                 </div>
                 <WeatherSummary :weatherInfo="weatherInfo" />
               </div>
